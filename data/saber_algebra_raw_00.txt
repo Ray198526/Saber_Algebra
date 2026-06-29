@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Saber y Álgebra - Portal de Aprendizaje</title>
+    
+    <!-- Tailwind CSS para diseño moderno -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        /* Estilos de barra de desplazamiento modernos con soporte para iOS */
+        .custom-scrollbar {
+            -webkit-overflow-scrolling: touch; /* Desplazamiento fluido en iOS Safari */
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0f172a;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        
+        /* Evita el destello azul al pulsar elementos en iOS */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Forzar que los inputs no hagan auto-zoom molesto en iOS */
+        input[type="text"] {
+            font-size: 16px !important; /* Mínimo requerido por iOS Safari para no forzar zoom */
+        }
+
+        /* Animaciones de interfaz */
+        @keyframes popIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-pop-in {
+            animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-6px); }
+            40%, 80% { transform: translateX(6px); }
+        }
+        .animate-shake {
+            animation: shake 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans overflow-hidden h-[100dvh] transition-colors duration-300">
+
+    <div id="app" class="flex flex-col h-[100dvh]">
+        <!-- Toda la interfaz se renderiza dinámicamente aquí -->
+        <div class="flex items-center justify-center h-full w-full flex-col gap-4">
+            <span class="text-xl font-bold text-slate-400">Cargando Saber y Álgebra...</span>
+            <div class="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+    </div>
+
+    <script>
+        // Base de datos de las 30 sesiones completas
+        const algebraData = [
+          {
+            chapter: 1,
+            title: "El Misterio de las Letras (Lenguaje Algebraico)",
+            sessions: [
+              {
+                id: 1,
+                title: "Sesión 1: ¿Qué son las letras?",
+                reminder: null,
+                dialogue: [
+                  { speaker: 'Sócrates', text: 'Imagina que tienes una caja cerrada. No sabes cuántas manzanas hay dentro. Como no lo sabes, le ponemos un nombre temporal: "x". Las letras son solo "cajas vacías" esperando a que descubramos qué número llevan dentro.' },
+                  { speaker: 'Baldor', text: 'En matemáticas, las llamamos Variables. Si escribo 2x, significa "2 multiplicado por el valor de x".' }
+                ],
+                exercises: [
+                  { q: "Un número cualquiera.", a: ["x", "a", "n", "y", "m"] },
+                  { q: "El doble de un número.", a: ["2x", "2a", "2n"] },
+                  { q: "Un número aumentado en 5.", a: ["x+5", "5+x", "a+5"] },
+                  { q: "Un número disminuido en 8.", a: ["x-8", "a-8", "n-8"] },
+                  { q: "El triple de un número.", a: ["3x", "3a", "3n"] },
+                  { q: "La mitad de un número.", a: ["x/2", "1/2x", "x÷2"] },
+                  { q: "Un número menos 10.", a: ["x-10", "a-10"] },
+                  { q: "Un cuarto de un número.", a: ["x/4", "1/4x"] },
+                  { q: "La suma de un número y 8.", a: ["x+8", "8+x"] },
+                  { q: "Cinco veces un número.", a: ["5x", "5a"] }
+                ],
+                metacognitive: ["¿Por qué crees que usamos letras como la 'x' en lugar de dejar un espacio en blanco o usar signos de interrogación?"]
+              },
+              {
+                id: 2,
+                title: "Sesión 2: Traduciendo el mundo al álgebra",
+                reminder: "Ayer aprendimos que en álgebra usamos letras (como 'x', 'y' o 'a') para representar números misteriosos o 'variables' cuyos valores no conocemos todavía. ¡Hoy aprenderemos a traducir frases de nuestro idioma común a este nuevo lenguaje!",
+                dialogue: [
+                  { speaker: 'Sócrates', text: '¿Y si juntamos dos misterios? Si tengo manzanas en una caja (x) y peras en otra (y), y las junto, ¿qué tengo?' },
+                  { speaker: 'Baldor', text: 'Tienes x + y. Traducir del español al álgebra requiere leer con cuidado. "Aumentado" es suma, "diferencia" es resta, "producto" es multiplicación.' }
+                ],
+                exercises: [
+                  { q: "La suma de dos números distintos.", a: ["x+y", "a+b", "m+n"] },
+                  { q: "El doble de un número, más 10.", a: ["2x+10", "10+2x"] },
+                  { q: "Un número restado de 20.", a: ["20-x", "20-a"] },
+                  { q: "Un número multiplicado por sí mismo.", a: ["x^2", "x*x", "xx"] },
+                  { q: "El triple de x, menos el doble de y.", a: ["3x-2y"] },
+                  { q: "La suma de tres números iguales.", a: ["x+x+x", "3x", "y+y+y"] },
+                  { q: "La mitad de x, más y.", a: ["x/2+y", "y+x/2"] },
+                  { q: "El producto de a y b",
